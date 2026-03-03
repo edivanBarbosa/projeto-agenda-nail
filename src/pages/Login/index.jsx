@@ -10,7 +10,7 @@ const Login = () => {
         const { error } = await supabase.auth.signInWithOAuth({
             provider: 'google',
             options: {
-                redirectTo: 'http://localhost:5173/#' // ou sua URL de produção
+                redirectTo: 'http://localhost:5173/servicos' // ou sua URL de produção
             }
         });
 

@@ -1,19 +1,26 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../supabaseClient';
-
+import './Logout.css'; // Importando o CSS separado
 
 const Logout = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
         const handleLogout = async () => {
-            const { error } = await supabase.auth.signOut();
+            try {
+                // Encerra a sessão no Supabase
+                const { error } = await supabase.auth.signOut();
+                if (error) throw error;
 
-            if (error) {
-                console.error('Erro ao fazer logout:', error.message);
-            } else {
-                navigate('/logout'); // redireciona para login
+                // Pequena pausa para o usuário ler a mensagem, depois redireciona para o login
+                setTimeout(() => {
+                    navigate('/', { replace: true });
+                }, 1500);
+
+            } catch (error) {
+                console.error('Erro ao encerrar sessão:', error.message);
+                navigate('/');
             }
         };
 
@@ -21,9 +28,12 @@ const Logout = () => {
     }, [navigate]);
 
     return (
-        <div style={{ textAlign: 'center', marginTop: '100px' }}>
-            <h2>Saindo...</h2>
-            <p>Você está sendo desconectado.</p>
+        <div className="logout-container">
+            <div className="logout-card">
+                <div className="logout-spinner"></div>
+                <h2 className="logout-title">Saindo com segurança...</h2>
+                <p className="logout-text">Até breve! Estamos desconectando sua conta.</p>
+            </div>
         </div>
     );
 };
