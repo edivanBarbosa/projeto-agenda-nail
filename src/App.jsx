@@ -1,55 +1,37 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import Login from './pages/Login';
-import Logout from './pages/Logout';
-import Servicos from './pages/Servicos';
-// AJUSTE AQUI: Como o App.jsx está na raiz da src junto com o supabaseClient, usamos './'
-import { supabase } from './supabaseClient'; 
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Servicos from "./pages/Servicos";
+import Adm from "./pages/Adm";
+import Logout from "./pages/Logout";
+import Agendamento from "./pages/Agendamento";
 
 function App() {
-  const [session, setSession] = useState(null);
-  const [loading, setLoading] = useState(true); // Adicionado para evitar pulos de tela
-
-  useEffect(() => {
-    // 1. Pega a sessão atual ao carregar
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setLoading(false);
-    });
-
-    // 2. Escuta mudanças na autenticação (login/logout)
-    const { data: listener } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
-        setSession(session);
-        setLoading(false);
-      }
-    );
-
-    return () => {
-      listener.subscription.unsubscribe();
-    };
-  }, []);
-
-  // Enquanto verifica se o usuário está logado, exibe nada ou um loading
-  if (loading) return null; 
-
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={session ? <Navigate to="/servicos" /> : <Login />}
-        />
 
-        <Route
-          path="/servicos"
-          element={session ? <Servicos /> : <Navigate to="/" />}
-        />
+        {/* Página inicial */}
+        <Route path="/" element={<Home />} />
+
+        {/* Permite acessar também /home */}
+        <Route path="/home" element={<Home />} />
+
+        {/* Outras páginas */}
+        <Route path="/login" element={<Login />} />
+
+        <Route path="/servicos" element={<Servicos />} />
+
+        <Route path="/agendamento" element={<Agendamento />} />
+
+        <Route path="/adm" element={<Adm />} />
 
         <Route path="/logout" element={<Logout />} />
-        
-        {/* Rota de segurança: se digitar qualquer coisa errada, volta pro início */}
+
+        {/* Qualquer rota inexistente volta para Home */}
         <Route path="*" element={<Navigate to="/" />} />
+
       </Routes>
     </BrowserRouter>
   );

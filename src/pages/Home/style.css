@@ -1,0 +1,62 @@
+.home-container {
+  background: #fff5f8;
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+}
+
+.home-header {
+  text-align: center;
+  padding: 40px 20px;
+  background: white;
+  border-bottom: 2px solid #fce4ec;
+}
+
+.main-logo { width: 120px; margin-bottom: 10px; }
+
+.vitrine-servicos {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.grid-servicos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.card-servico {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(233, 30, 99, 0.05);
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.card-servico:hover { transform: translateY(-5px); }
+
+.card-image img { width: 100%; height: 200px; object-fit: cover; }
+
+.card-info { padding: 20px; }
+
+.card-info h3 { color: #6a1b4d; margin-bottom: 8px; }
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.preco { color: #e91e8c; font-weight: 700; font-size: 1.2rem; }
+
+.btn-agendar {
+  background: #e91e8c;
+  color: white;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 50px;
+  cursor: pointer;
+}
